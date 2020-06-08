@@ -1,0 +1,95 @@
+# # удаление выделенного элемента
+# def delete():
+#     global newWindow2
+#     # selection = languages_listbox.curselection()
+#     # # мы можем получить удаляемый элемент по индексу
+#     # # selected_language = languages_listbox.get(selection[0])
+#     # languages_listbox.delete(selection[0])
+#     newWindow2 = create_window()
+
+
+
+
+
+def check_node(nod, kb):
+    for klemnaya_kolodka in kb:
+        if nod in klemnaya_kolodka:
+            return True
+    return False
+
+
+def is_exist(n1, n2, links):
+    for link in links:
+        if (link[0] == n1 and link[1] == n2) or (link[1] == n1 and link[0] == n2):
+            return True
+    return False
+
+
+def add_link(links, kb, n1, n2, info="", signal=""):
+    if check_node(n1, kb) and check_node(n2, kb):
+        if not is_exist(n1, n2, links):
+            links.append([n1, n2, signal, info])
+            return "link add success"
+        else:
+            return "link already exist"
+    return f"n1 in kb {check_node(n1, kb)}   n2 in kb {check_node(n2, kb)}"
+
+
+def rem_link(n1, n2, links):
+    link_to_rem = next((
+        link for link in links if (link[0] == n1 and link[1] == n2) or (
+            link[1] == n1 and link[0] == n2)), [None])
+    if link_to_rem is not None:
+        links.remove(link_to_rem)
+        return "remove success"
+    return "no such link"
+
+
+def save_json(lst):
+    with open('data.json', 'w') as file:
+        json.dump(lst, file)
+
+
+def load_json():
+    with open('data.json', 'r') as file:
+        return json.load(file)
+
+
+def print_links(links):
+    for node in links:
+        print(node)
+
+
+def get_row(list_name, row_index):
+    return [row[row_index] for row in list_name]
+
+
+def get_signals(links):
+    lsl = get_row(links, 2)
+    lsl.sort()
+    lsl2 = [el for el, _ in groupby(lsl)]
+    return lsl2
+
+
+def get_nodes_by_signal(links, signal_name):
+    if signal_name == "all signals":
+        return links
+    matches = [x for x in links if x[2] == signal_name]
+
+    return matches
+
+
+def delete_signal(signal, blinks):
+    links_to_rem = []
+    for link in blinks:
+        if link[2] == signal:
+            links_to_rem.append(link)
+    for link in links_to_rem:
+        print(rem_link(link[0], link[1], blinks))
+
+
+
+        # label_example = ttk.Button(new_window, text="New Window", )
+        # label_example.pack(side="top", fill="both")
+        # label_example2 = ttk.Button(new_window, text="New Window", )
+        # label_example2.pack(side="top", fill="both")
