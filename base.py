@@ -1,7 +1,7 @@
 from gui_classes import AutocompleteEntry, Table, SignalList
 from gui_sheme import Kbsheme
 from krossblocks import KBK
-from  utils import Utils
+from utils import Utils
 from tkinter import filedialog
 import links as lnk
 import tkinter as tk
@@ -10,37 +10,47 @@ import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
 
-ut=Utils("ss")
-ut.m151_200 = "p2"
-ut.m1_50 = "p1"
-ut.generate_links()
+ut = Utils("ss")
+# ut.m151_200 = "p2"
+# ut.m1_50 = "p1"
+# ut.generate_links()
 
-links = lnk.Links(KBK,ut)
+links = lnk.Links(KBK, ut)
 print(links.check_node("CH_98"))
 links.load_json("test_data")
 
 
 def popupmsg(msg="Подключение модулей"):
-
     popup = tk.Tk(className='Tkkross')
     popup.wm_title("Подключение модулей")
-    label = ttk.Label(popup, text=msg)
+
+    label = ttk.Label(popup, text="1").pack()
     comboExample = ttk.Combobox(popup,
                                 values=ut.connectors)
     comboExample.pack()
+    label = ttk.Label(popup, text="2").pack()
     comboExample2 = ttk.Combobox(popup,
-                                values=ut.connectors)
+                                 values=ut.connectors)
     comboExample2.pack()
+    label = ttk.Label(popup, text="3").pack()
     comboExample3 = ttk.Combobox(popup,
-                                values=ut.connectors)
+                                 values=ut.connectors)
     comboExample3.pack()
+    label = ttk.Label(popup, text="4").pack()
     comboExample4 = ttk.Combobox(popup,
-                                values=ut.connectors)
+                                 values=ut.connectors)
     comboExample4.pack()
-    label.pack(side="top", fill="x", pady=10)
+
     def plop():
+        ut.m1_50 = comboExample.get()
+        ut.m51_100 = comboExample2.get()
+        ut.m101_150 = comboExample3.get()
+        ut.m151_200 = comboExample4.get()
+        ut.base.clear()
+        ut.generate_links()
         popup.destroy()
-    B1 = ttk.Button(popup, text="Okay", command = plop)
+
+    B1 = ttk.Button(popup, text="Okay", command=plop)
     B1.pack()
     popup.mainloop()
 
@@ -201,8 +211,9 @@ def graf():
     else:
         pos = hierarchy_pos(G, "K_1")
         print(list(nx.bfs_edges(G, "K_1")))
-        nx.draw(G,  pos=pos, with_labels=True)
+        nx.draw(G, pos=pos, with_labels=True)
     plt.show()
+
 
 autocompleteList = list()
 for klemnik in KBK:
