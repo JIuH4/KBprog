@@ -1,32 +1,6 @@
-KL_M = []
 Chanel_name = []
 for n in range(0, 100):
     Chanel_name.append(f"CH_{n}")
-# print(Chanel_name)
-# KL_M = tuple(KL_M)
-
-p1_p2 = []
-for i in range(1, 51):
-    p1_p2.append([i, 51 - i, Chanel_name[100 - i * 2 + 1]])
-# print(p1_p2)
-
-p3_p4 = []
-# for i in range(1, 51):
-#     p3_p4.append([i, 51 - i, Chanel_name[100 - i * 2]])
-# print(p3_p4)
-
-for i in range(1, 51):
-    p3_p4.append([f"M_{i}", Chanel_name[100 - i * 2 + 1], Chanel_name[100 - i * 2 + 1]])
-
-
-# print(p3_p4)
-
-
-# for n in range(0, 100, 2):
-#     KL_M.append([f"{n+1 }", f"{n + 2}",Chanel_name[100-n-2]])
-# KL_M = tuple(KL_M)
-# print(KL_M)
-
 
 class Utils:
 
@@ -38,6 +12,7 @@ class Utils:
         self.m51_100 = ""
         self.m101_150 = ""
         self.m151_200 = ""
+        self.connectors=["p1","p2","p3","p4"]
 
     def add_module_pxi2569(self):
         # m1_50
@@ -96,14 +71,24 @@ class Utils:
     def generate_links(self):
         self.add_module_pxi2569()
 
-    def process_node(self):
-        pass
+    def process_node(self, node):
+        links = []
+        for link in self.base:
+            if link[0] == node:
+                links.append(link)
+                for link2 in self.base:
+                    if link2[1] == link[1] and link2[0] != link[0]:
+                        links.append(link2)
+        return links
 
     def display_info(self):
         print("", self.name)
 
 
-ut = Utils("ss")
-ut.m151_200 = "p2"
-ut.add_module_pxi2569()
-print(ut.base)
+# ut = Utils("ss")
+# ut.m151_200 = "p2"
+# ut.m1_50 = "p1"
+#
+# ut.add_module_pxi2569()
+# print(ut.process_node("M_156"))
+# print(ut.base)

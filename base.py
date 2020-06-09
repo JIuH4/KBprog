@@ -1,6 +1,7 @@
 from gui_classes import AutocompleteEntry, Table, SignalList
 from gui_sheme import Kbsheme
 from krossblocks import KBK
+from  utils import Utils
 from tkinter import filedialog
 import links as lnk
 import tkinter as tk
@@ -9,11 +10,42 @@ import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
 
-links = lnk.Links(KBK)
+ut=Utils("ss")
+ut.m151_200 = "p2"
+ut.m1_50 = "p1"
+ut.generate_links()
+
+links = lnk.Links(KBK,ut)
+print(links.check_node("CH_98"))
 links.load_json("test_data")
 
 
-print(links.edit_link("K_1", "M_51",node2_new="M_59"))
+def popupmsg(msg="Подключение модулей"):
+
+    popup = tk.Tk(className='Tkkross')
+    popup.wm_title("Подключение модулей")
+    label = ttk.Label(popup, text=msg)
+    comboExample = ttk.Combobox(popup,
+                                values=ut.connectors)
+    comboExample.pack()
+    comboExample2 = ttk.Combobox(popup,
+                                values=ut.connectors)
+    comboExample2.pack()
+    comboExample3 = ttk.Combobox(popup,
+                                values=ut.connectors)
+    comboExample3.pack()
+    comboExample4 = ttk.Combobox(popup,
+                                values=ut.connectors)
+    comboExample4.pack()
+    label.pack(side="top", fill="x", pady=10)
+    def plop():
+        popup.destroy()
+    B1 = ttk.Button(popup, text="Okay", command = plop)
+    B1.pack()
+    popup.mainloop()
+
+
+# print(links.edit_link("K_1", "M_51",node2_new="M_59"))
 
 
 def add():
@@ -211,8 +243,10 @@ menubar.add_cascade(label="File", menu=filemenu)
 
 # create more pulldown menus
 helpmenu = tk.Menu(menubar, tearoff=0)
+helpmenu.add_command(label="pop!", command=popupmsg)
 helpmenu.add_command(label="QUIT!", command=root.quit)
 menubar.add_cascade(label="Quit", menu=helpmenu)
+# menubar.add_cascade(label="Quit222", menu=popupmsg)
 # display the menu
 root.config(menu=menubar)
 

@@ -1,9 +1,11 @@
 import json
+from utils import Utils
 from itertools import groupby
 
 
 class Links:
-    def __init__(self, kros_bloc):
+    def __init__(self, kros_bloc, mods):
+        self.mods: Utils = mods
         self.links = []
         self.kross_bloc = kros_bloc
         self.selected_signal = ""
@@ -13,6 +15,9 @@ class Links:
     def check_node(self, node):
         for klemnaya_kolodka in self.kross_bloc:
             if node in klemnaya_kolodka:
+                return True
+        for link in self.mods.base:
+            if node == link[1]:
                 return True
         return False
 
@@ -26,6 +31,12 @@ class Links:
         if self.check_node(n1) and self.check_node(n2):
             if not self.is_exist(n1, n2):
                 self.links.append([n1, n2, signal, info])
+                linked_modules = self.mods.process_node(n1)
+                for link in linked_modules:
+                    self.add_link(link[0], link[1], signal)
+                linked_modules = self.mods.process_node(n2)
+                for link in linked_modules:
+                    self.add_link(link[0], link[1], signal)
                 return "link add success"
             else:
                 return "link already exist"

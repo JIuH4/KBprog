@@ -30,6 +30,7 @@ class Kbsheme(tk.Frame):
         self.terminal_print_face_up(900, 620, 50, "M", start_number=25, shift=25)
         self.terminal_print_face_up(180, 500, 52, "M", start_number=100, shift=26)
         self.terminal_print_face_up(900, 500, 52, "M", start_number=126, shift=26)
+        self.terminal_print_face_down(300, 750, 100, "CH")
         self.c.pack(side="left", fill="both", expand=True)
         # EVENTS
         self.c.tag_bind("press", '<Button-1>', self.event_process)
