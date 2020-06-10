@@ -17,7 +17,7 @@ ut = Utils("ss")
 
 links = lnk.Links(KBK, ut)
 print(links.check_node("CH_98"))
-links.load_json("test_data")
+# links.load_json("test_data")
 
 
 def popupmsg(msg="Подключение модулей"):
