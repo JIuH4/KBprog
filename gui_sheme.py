@@ -20,6 +20,7 @@ class Kbsheme(tk.Frame):
         self.redboxes_num = 0
         self.rbox_tag = [""]*2
         # PRINT KBK
+        self.terminal_print_face_down(600, 30, 10, "C")
         self.terminal_print_face_down(200, 120, 50, "BA1")
         self.terminal_print_face_down(900, 120, 50, "BA3")
         self.terminal_print_face_down(200, 250, 50, "BA2")
@@ -31,6 +32,10 @@ class Kbsheme(tk.Frame):
         self.terminal_print_face_up(180, 500, 52, "M", start_number=100, shift=26)
         self.terminal_print_face_up(900, 500, 52, "M", start_number=126, shift=26)
         self.terminal_print_face_down(300, 750, 100, "CH")
+        self.terminal_print_face_up(180, 420, 25, "MB1")
+        self.terminal_print_face_up(900, 420, 25, "MB2")
+        self.terminal_print_face_up(180, 350, 25, "MB3")
+        self.terminal_print_face_up(900, 350, 25, "MB4")
         self.c.pack(side="left", fill="both", expand=True)
         # EVENTS
         self.c.tag_bind("press", '<Button-1>', self.event_process)
